@@ -1,42 +1,61 @@
-# MCP Course Project 🚀
+# MCP Course: FastMCP Learning Projects 🚀
 
-A simple FastMCP practice project from the CampusX MCP course.
-This project exposes basic tools through an MCP server.
+Hands-on FastMCP practice repository with two Python MCP servers:
 
-## 📌 Project Overview
+- a simple starter server for basic tools
+- an Expense Tracker MCP server backed by SQLite
 
-This repository demonstrates how to:
+## ✨ Project Highlights
 
-- create an MCP server with `FastMCP`
-- register tools using decorators
-- run the server locally for testing and development
+### 🧩 FastMCP Fundamentals
+
+Learn how to:
+
+- create MCP servers with `FastMCP`
+- register tools using `@mcp.tool`
+- expose resources using `@mcp.resource`
+- run servers locally for development and testing
+
+### 💸 Real Mini-Project
+
+The Expense Tracker server demonstrates:
+
+- persistent storage using SQLite
+- date-range filtering
+- category-wise expense summaries
+- JSON resource serving via MCP
 
 ## 🧱 Tech Stack
 
 - Python `3.11+`
 - `fastmcp>=3.1.0`
-- `uv` (recommended for environment and dependency management)
+- SQLite (built-in with Python)
+- `uv` (recommended)
 
-## 📂 Project Structure
+## 📂 Repository Structure
 
 ```text
 mcp-course/
 ├── main.py
-├── main.ipynb
+├── test.py
 ├── pyproject.toml
-└── README.md
+├── README.md
+└── expense_tracker_mcp_server/
+	├── __init__.py
+	├── main.py
+	└── categories.json
 ```
 
-## ⚙️ Setup
+## ⚙️ Setup Guide
 
-### 1. Clone the repository
+### 1. Clone the repository 📥
 
 ```bash
 git clone https://github.com/BUFONJOKER/mcp-course.git
 cd mcp-course
 ```
 
-### 2. Create environment and install dependencies
+### 2. Install dependencies 📦
 
 ```bash
 uv sync
@@ -44,55 +63,94 @@ uv sync
 
 If you are not using `uv`, create a virtual environment and install `fastmcp` manually.
 
-## ▶️ Run the MCP Server
+## ▶️ Run the Servers
 
-### Option A: Run directly with Python
+### A) Simple MCP server (root) 🎲
 
 ```bash
 python main.py
 ```
 
-### Option B: Run with FastMCP run command
+### B) Expense Tracker MCP server 💸
+
+```bash
+python expense_tracker_mcp_server/main.py
+```
+
+### C) Run with FastMCP CLI (optional) 🛠️
 
 ```bash
 uv run fastmcp run main.py
+uv run fastmcp run expense_tracker_mcp_server/main.py
 ```
 
-### Option C: Run with MCP Inspector (dev mode)
+### D) Run in MCP Inspector (dev mode) 🔎
 
 ```bash
 uv run fastmcp dev inspector main.py
+uv run fastmcp dev inspector expense_tracker_mcp_server/main.py
 ```
 
-## 🛠️ Available MCP Tools
+## 🛠️ Available MCP Features
 
-### 1) `generate_random_number()` 🎲
+### 1) Root Server Tools (`main.py`)
 
-- Description: Generates a random integer between `1` and `100`.
-- Input: None
-- Output: Integer
+#### 🎲 `generate_random_number()`
 
-### 2) `add_two_numbers(first_number, second_number)` ➕
+- Returns a random integer from `1` to `100`.
 
-- Description: Adds two numbers.
-- Input: Two numeric values
-- Output: Sum of the two numbers
+#### ➕ `add_two_numbers(first_number, second_number)`
 
-## 🧪 Example Expectations
+- Returns the sum of two numeric inputs.
 
-- `generate_random_number()` returns values in range `1..100`
-- `add_two_numbers(10, 5)` returns `15`
+### 2) Expense Tracker Tools (`expense_tracker_mcp_server/main.py`)
 
-## 🎯 Learning Goals
+#### ➕ `add_expense(date, amount, category, subcategory='')`
 
-- understand MCP server basics
-- build and expose simple tools
-- practice local testing workflows
+- Adds a new expense record.
+
+#### 📋 `list_expenses(date_from='', date_to='')`
+
+- Lists all expenses.
+- If both dates are provided, returns expenses in that range.
+
+#### 📊 `summarize(start_date, end_date, category='')`
+
+- Returns total spending grouped by category.
+- If a category is provided, summarizes only that category.
+
+#### 📚 Resource: `expense://categories`
+
+- Serves category data from `categories.json` as JSON.
+
+## 🗄️ Data Notes
+
+- Expense data is stored in `expense_tracker_mcp_server/expenses.db` (created automatically).
+- The `expenses` table is initialized on server startup.
+
+## 🧪 Quick Examples
+
+- `add_two_numbers(10, 5)` → `15`
+- `generate_random_number()` → any integer in `1..100`
+- `add_expense("2026-03-01", 250.0, "Food", "Lunch")` → success message
+
+## 🎯 Learning Outcomes
+
+By working through this repo, you will practice:
+
+- MCP tool design and registration
+- working with persistent local storage
+- structuring multi-module Python MCP projects
+- exposing both tools and resources in one server
 
 ## 🤝 Contributing
 
-Contributions are welcome for learning improvements, additional tools, and better examples.
+Contributions are welcome for:
+
+- new tools
+- better validations/error handling
+- improved examples and docs
 
 ## 📜 License
 
-This project is for learning and practice purposes.
+This repository is for learning and practice.
