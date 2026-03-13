@@ -42,7 +42,12 @@ async def main():
 
   named_tools = {tool.name: tool for tool in tools}
 
-  print(named_tools)
+  model = ChatOllama(model="qwen3.5:cloud")
+  model_with_tools = model.bind_tools(tools)
+
+  prompt = "Generate a random number"
+  response = await model_with_tools.ainvoke(prompt)
+  print("Response:", response)
 
 if __name__ == "__main__":
     asyncio.run(main())
